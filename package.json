@@ -1,6 +1,7 @@
 {
   "name": "globe-graphic-template",
   "version": "2.0.5",
+  "homepage": "https://ssdatar.github.io/wallaroo-time-map",
   "scripts": {
     "start": "npm-run-all --silent --parallel webpack stylus server open",
     "webpack": "webpack -w --config webpack.config.js",
@@ -13,7 +14,8 @@
     "build:css": "autoprefixer < src/main.css | uglifycss src/main.css > ./build/main.css",
     "build:assets": "shx cp -R src/assets/ ./build/assets/",
     "build": "npm run build:html && npm run build:js && npm run build:css && npm run build:assets",
-    "upload": "npm run build && ./upload.sh",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "open": "open http://localhost:8888"
   },
   "browserslist": [
@@ -34,14 +36,15 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.16.0",
+    "gh-pages": "^3.1.0",
     "json-loader": "^0.5.7",
     "light-server": "^2.5.0",
     "npm-run-all": "^4.1.2",
     "rimraf": "2.6.2",
     "shx": "0.2.2",
     "stylus": "^0.54.5",
-    "uglifycss": "0.0.29",
     "uglify-js": "3.3.23",
+    "uglifycss": "0.0.29",
     "webpack": "^3.11.0"
   },
   "dependencies": {
