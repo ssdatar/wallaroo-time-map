@@ -49,6 +49,8 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
 
 #wallaroo-map
   height 500px
+  +mq(bp-2)
+    height 600px
 
   .graphic__input
     position absolute
@@ -58,6 +60,15 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
     z-index 2
     background #fff
     padding 1em
+    width auto
+    +mq(bp-2)
+      width 250px
+      font-size 1.1rem
+      font-weight bold
+      line-height 1.4
+
+    #slider
+      width 90%
 
 .graphic
   &__text

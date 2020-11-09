@@ -22,6 +22,8 @@ const map = new mapboxgl.Map({
   zoom: 3,
 });
 
+const popup = new mapboxgl.Popup();
+
 const convertToTime = (n) => {
   let h = Math.floor(n / 60) % 24;
   let m = n % 60;
@@ -31,6 +33,19 @@ const convertToTime = (n) => {
 };
 
 const makeMap = () => {
+  map.addLayer({
+    id: 'routes',
+    type: 'line',
+    source: {
+      type: 'geojson',
+      data: './assets/lines.geojson',
+    },
+    paint: {
+      'line-color': '#888',
+      'line-width': 2,
+    },
+  });
+
   map.addLayer({
     id: 'packages',
     type: 'circle',
@@ -42,7 +57,7 @@ const makeMap = () => {
       'circle-radius': [
         'interpolate', ['linear'], ['zoom'],
         0, ['sqrt', ['get', 'Value']],
-        10, ['/', 2, ['sqrt', ['get', 'Value']]],
+        7, ['/', 2, ['sqrt', ['get', 'Value']]],
       ],
       'circle-color': [
         'case',
@@ -61,6 +76,15 @@ const makeMap = () => {
   });
 
   map.setFilter('packages', ['==', ['get', 'Time'], 60]);
+
+  map.on('click', 'packages', (e) => {
+    console.log(e);
+
+    popup
+      .setLngLat(e.lngLat)
+      .setHTML(e.features[0].properties.Package)
+      .addTo(map);
+  });
 
   slider.addEventListener('change', (e) => {
     const m = +e.target.value;
