@@ -54,11 +54,7 @@ const makeMap = () => {
       data: './assets/packages.json',
     },
     paint: {
-      'circle-radius': [
-        'interpolate', ['linear'], ['zoom'],
-        0, ['sqrt', ['get', 'Value']],
-        7, ['/', 2, ['sqrt', ['get', 'Value']]],
-      ],
+      'circle-radius': ['/', ['sqrt', ['number', ['get', 'Value']]], 3],
       'circle-color': [
         'case',
         ['==', ['number', ['get', 'Delayed']], 0],
@@ -80,9 +76,14 @@ const makeMap = () => {
   map.on('click', 'packages', (e) => {
     console.log(e);
 
+    const html = `
+    <h4>Package #${e.features[0].properties.Package}</h4>
+    <p>Delayed: ${e.features[0].properties.Delayed}</p>
+    <p>Damaged: ${e.features[0].properties.Damaged}</p>`;
+
     popup
       .setLngLat(e.lngLat)
-      .setHTML(e.features[0].properties.Package)
+      .setHTML(html)
       .addTo(map);
   });
 
