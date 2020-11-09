@@ -1,0 +1,102 @@
+@font-face {
+  font-family: 'Benton';
+  src: url("https://apps.bostonglobe.com/common/font/benton-bold.woff2") format('woff2'), url("https://apps.bostonglobe.com/common/font/benton-bold.woff") format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+.benton-bold {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+.loaded-benton-bold .benton-bold {
+  font-family: 'Benton', Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Benton';
+  src: url("https://apps.bostonglobe.com/common/font/benton-regular.woff2") format('woff2'), url("https://apps.bostonglobe.com/common/font/benton-regular.woff") format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+.benton-regular {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.loaded-benton-regular .benton-regular {
+  font-family: 'Benton', Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'BentonSansCond-Regular';
+  src: url("https://apps.bostonglobe.com/common/font/bentonsanscond-regular.woff2") format('woff2'), url("https://apps.bostonglobe.com/common/font/bentonsanscond-regular.woff") format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+.bentonsanscond-regular {
+  font-family: Impact, Arial Narrow, Helvetica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.loaded-bentonsanscond-regular .bentonsanscond-regular {
+  font-family: 'BentonSansCond-Regular', Impact, Arial Narrow, Helvetica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.source-and-credit {
+  clear: both;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 1em;
+}
+.source-and-credit p {
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  text-align: left;
+  float: none;
+}
+.source-and-credit .source span {
+  font-weight: normal;
+}
+@media only screen and (min-width: 40em) {
+  .source-and-credit .source span {
+    float: left;
+  }
+}
+.source-and-credit .credit span {
+  text-transform: uppercase;
+}
+@media only screen and (min-width: 40em) {
+  .source-and-credit .credit span {
+    text-align: right;
+    float: right;
+  }
+}
+#wallaroo-map {
+  height: 500px;
+}
+.graphic__text {
+  margin: 0.5rem 0;
+}
+.graphic__text--hed {
+  font-weight: bold;
+}
+@media only screen and (min-width: 40em) {
+  .graphic__text--hed {
+    font-size: 1.1rem;
+  }
+}
+.graphic__text--subhed {
+  font-size: 0.9rem;
+}
+@media only screen and (min-width: 40em) {
+  .graphic__text--subhed {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
