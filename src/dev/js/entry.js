@@ -16,9 +16,9 @@ const activeDay = select('#active-day');
 const activeHr = select('#active-hour');
 
 const map = new mapboxgl.Map({
-  container: 'wallaroo-map', // container element id
-  style: 'mapbox://styles/mapbox/light-v10',
-  center: [-95.7129, 37.0902], // initial map center in [lon, lat]
+  container: 'wallaroo-map',
+  style: 'mapbox://styles/mapbox/dark-v10',
+  center: [-95.7129, 37.0902],
   zoom: 3,
 });
 
@@ -38,12 +38,32 @@ const makeMap = () => {
       type: 'geojson',
       data: './assets/packages.json',
     },
+    paint: {
+      'circle-radius': [
+        'interpolate', ['linear'], ['zoom'],
+        0, ['sqrt', ['get', 'Value']],
+        10, ['/', 2, ['sqrt', ['get', 'Value']]],
+      ],
+      'circle-color': [
+        'case',
+        ['==', ['number', ['get', 'Delayed']], 0],
+        '#ffff99',
+        ['>', ['number', ['get', 'Delayed']], 1],
+        '#fdc086',
+        ['>', ['number', ['get', 'Damaged']], 0],
+        '#beaed4',
+        '#7fc97f',
+      ],
+      'circle-stroke-color': '#efefef',
+      'circle-stroke-width': 1.5,
+      'circle-opacity': 0.8,
+    },
   });
 
-  map.setFilter('packages', ['==', ['get', 'Time'], '60']);
+  map.setFilter('packages', ['==', ['get', 'Time'], 60]);
 
   slider.addEventListener('change', (e) => {
-    const m = e.target.value;
+    const m = +e.target.value;
     const filterTime = ['==', ['get', 'Time'], m];
     console.log(m);
     const day = Math.floor(parseInt(m, 10) / 1440);
