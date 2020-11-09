@@ -13,8 +13,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZGF0YXJrYWxsb28iLCJhIjoiY2toOXI3aW5kMDRlZTJ4c
 const map = new mapboxgl.Map({
   container: 'wallaroo-map', // container element id
   style: 'mapbox://styles/mapbox/light-v10',
-  center: [-74.0059, 40.7128], // initial map center in [lon, lat]
-  zoom: 10,
+  center: [-95.7129, 37.0902], // initial map center in [lon, lat]
+  zoom: 3,
 });
 
 const makeMap = () => {
