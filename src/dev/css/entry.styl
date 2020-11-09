@@ -80,6 +80,31 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
     font-size 1.1em
 
 .graphic
+  &__legend
+    position absolute
+    right 20px
+    top 20px
+    z-index 2
+    color $offwhite
+    padding 1em
+
+    .legend-text
+      font-size 1.2em
+      vertical-align text-bottom
+
+    .legend-box
+      height 1.2em
+      width @height
+      border-radius 50%
+      display inline-block
+      margin-right .25em
+
+      &-1
+        background #ffffb3
+
+      &-2
+        background #fb8072
+
   &__text
     margin .5rem 0
 
