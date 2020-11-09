@@ -54,18 +54,15 @@ const makeMap = () => {
       data: './assets/packages.json',
     },
     paint: {
-      'circle-radius': ['/', ['sqrt', ['number', ['get', 'Value']]], 3],
+      'circle-radius': ['*', ['sqrt', ['number', ['get', 'Value']]], 0.5],
       'circle-color': [
         'case',
-        ['==', ['number', ['get', 'Delayed']], 0],
-        '#ffff99',
-        ['>', ['number', ['get', 'Delayed']], 1],
-        '#fdc086',
-        ['>', ['number', ['get', 'Damaged']], 0],
-        '#beaed4',
-        '#7fc97f',
+        ['==', ['get', 'Damaged'], '0'], '#ffffb3',
+        // ['>', ['number', ['get', 'Delayed']], 1],// '#fdc086',
+        ['==', ['get', 'Damaged'], '1'], '#fb8072',
+        '#8dd3c7',
       ],
-      'circle-stroke-color': '#efefef',
+      'circle-stroke-color': '#ececec',
       'circle-stroke-width': 1.5,
       'circle-opacity': 0.8,
     },
@@ -78,6 +75,8 @@ const makeMap = () => {
 
     const html = `
     <h4>Package #${e.features[0].properties.Package}</h4>
+    <p>Route: ${e.features[0].properties.Route}</p>
+    <p>Value: ${e.features[0].properties.Value}</p>
     <p>Delayed: ${e.features[0].properties.Delayed}</p>
     <p>Damaged: ${e.features[0].properties.Damaged}</p>`;
 
@@ -85,6 +84,14 @@ const makeMap = () => {
       .setLngLat(e.lngLat)
       .setHTML(html)
       .addTo(map);
+  });
+
+  map.on('mouseenter', 'packages', () => {
+    map.getCanvas().style.cursor = 'pointer';
+  });
+
+  map.on('mouseleave', 'packages', () => {
+    map.getCanvas().style.cursor = '';
   });
 
   slider.addEventListener('change', (e) => {

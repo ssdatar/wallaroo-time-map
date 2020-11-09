@@ -49,6 +49,7 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
 
 #wallaroo-map
   height 500px
+  font-family 'Lato'
   +mq(bp-2)
     height 600px
 
@@ -69,6 +70,13 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
 
     #slider
       width 90%
+
+.mapboxgl-popup
+  line-height 1.6
+  padding 1em
+  font-size 1em
+  +mq(bp-2)
+    font-size 1.1em
 
 .graphic
   &__text
