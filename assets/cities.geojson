@@ -1,0 +1,55 @@
+{
+   "type": "FeatureCollection",
+   "features": [
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -73.57032,45.389913 ]
+    },
+    "properties": {
+    "city":"Montreal"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -121.447727,38.571851 ]
+    },
+    "properties": {
+    "city":"Sacramento"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -90.095216,29.985974 ]
+    },
+    "properties": {
+    "city":"New Orleans"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -80.22522,26.104105 ]
+    },
+    "properties": {
+    "city":"Miami"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -80.845266,35.243698 ]
+    },
+    "properties": {
+    "city":"Charlotte"
+    }
+  }
+]
+}
