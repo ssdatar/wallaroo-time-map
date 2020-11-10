@@ -82,15 +82,20 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
 .graphic
   &__legend
     position absolute
-    right 20px
-    top 20px
+    right 0px
+    top 0px
     z-index 2
     color $offwhite
     padding 1em
+    +mq(bp-2)
+      right 20px
+      top 20px
 
     .legend-text
-      font-size 1.2em
+      font-size 0.9em
       vertical-align text-bottom
+      +mq(bp-2)
+        font-size 1.2em
 
     .legend-box
       height 1.2em

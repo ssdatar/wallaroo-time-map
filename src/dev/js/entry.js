@@ -1,5 +1,6 @@
 import mapboxgl from 'mapbox-gl';
 import { select } from './utils/dom';
+import isMobile from './utils/isMobile';
 
 window.onResize = (width) => {
   console.log(width);
@@ -17,9 +18,9 @@ const activeHr = select('#active-hour');
 
 const map = new mapboxgl.Map({
   container: 'wallaroo-map',
-  style: 'mapbox://styles/mapbox/dark-v10',
+  style: 'mapbox://styles/mapbox/dark-v9',
   center: [-95.7129, 37.0902],
-  zoom: 3,
+  zoom: isMobile.any() ? 2 : 3,
 });
 
 const popup = new mapboxgl.Popup();
@@ -47,6 +48,46 @@ const makeMap = () => {
   });
 
   map.addLayer({
+    id: 'cities',
+    type: 'circle',
+    source: {
+      type: 'geojson',
+      data: './assets/cities.geojson',
+    },
+    // layout: {
+    //   'text-field': ['get', 'city'],
+    //   'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+    //   'text-radial-offset': 0.5,
+    //   'text-justify': 'auto',
+    // },
+    paint: {
+      'circle-color': '#e2e2e2',
+      'circle-radius': 7,
+      'circle-stroke-width': 2,
+      'circle-opacity': 0.6,
+    },
+  });
+
+  map.addLayer({
+    id: 'city-label',
+    type: 'symbol',
+    source: {
+      type: 'geojson',
+      data: './assets/cities.geojson',
+    },
+    layout: {
+      'text-field': ['get', 'city'],
+      'text-variable-anchor': ['top', 'right'],
+      'text-radial-offset': 0.7,
+      'text-justify': 'auto',
+      'text-size': 12,
+    },
+    paint: {
+      'text-color': '#ededed',
+    },
+  });
+
+  map.addLayer({
     id: 'packages',
     type: 'circle',
     source: {
@@ -68,7 +109,9 @@ const makeMap = () => {
     },
   });
 
-  map.setFilter('packages', ['==', ['get', 'Time'], 60]);
+  map.setFilter('packages', ['==', ['get', 'Time'], 4890]);
+  activeDay.innerText = 'Now';
+  activeHr.innerText = '09:30';
 
   map.on('click', 'packages', (e) => {
     console.log(e);
@@ -94,13 +137,12 @@ const makeMap = () => {
     map.getCanvas().style.cursor = '';
   });
 
-  slider.addEventListener('change', (e) => {
+  slider.addEventListener('input', (e) => {
     const m = +e.target.value;
     const filterTime = ['==', ['get', 'Time'], m];
-    console.log(m);
     const day = Math.floor(parseInt(m, 10) / 1440);
 
-    activeDay.innerText = `${day + 1}`;
+    activeDay.innerText = day > 2 ? 'Now' : `Now - ${Math.abs(day - 3)} days`;
     activeHr.innerText = convertToTime(+m);
 
     map.setFilter('packages', filterTime);

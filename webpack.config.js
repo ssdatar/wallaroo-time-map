@@ -13,6 +13,10 @@ module.exports = {
         use: ['dsv-loader']
       },
       {
+        test: /\.json?$/,
+        use: ['json-loader']
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
