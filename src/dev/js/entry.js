@@ -34,6 +34,9 @@ const convertToTime = (n) => {
 };
 
 const makeMap = () => {
+  let filterTime = ['==', ['get', 'Time'], 4890];
+  let filterFlag = ['!=', ['get', 'flag'], 'whatever'];
+
   map.addLayer({
     id: 'routes',
     type: 'line',
@@ -108,15 +111,13 @@ const makeMap = () => {
       'circle-stroke-width': 1.5,
       'circle-opacity': 0.8,
     },
+    filter: ['all', filterTime, filterFlag],
   });
 
-  map.setFilter('packages', ['==', ['get', 'Time'], 4890]);
   activeDay.innerText = 'Now';
   activeHr.innerText = '09:30';
 
   map.on('click', 'packages', (e) => {
-    console.log(e);
-
     const html = `
     <h4>Package #${e.features[0].properties.Package}</h4>
     <p>Route: ${e.features[0].properties.Route}</p>
@@ -140,13 +141,24 @@ const makeMap = () => {
 
   slider.addEventListener('input', (e) => {
     const m = +e.target.value;
-    const filterTime = ['==', ['get', 'Time'], m];
+    filterTime = ['==', ['get', 'Time'], m];
     const day = Math.floor(parseInt(m, 10) / 1440);
 
     activeDay.innerText = day > 2 ? 'Now' : `Now - ${Math.abs(day - 3)} days`;
     activeHr.innerText = convertToTime(+m);
 
-    map.setFilter('packages', filterTime);
+    map.setFilter('packages', ['all', filterTime, filterFlag]);
+  });
+
+  document.getElementById('flag-select').addEventListener('change', (e) => {
+    const flag = e.target.value;
+    console.log(flag);
+    if (flag === '0') {
+      filterFlag = ['!=', ['get', 'flag'], 'whatever'];
+    } else {
+      filterFlag = ['==', ['get', 'flag'], +flag];
+    }
+    map.setFilter('packages', ['all', filterTime, filterFlag]);
   });
 };
 
