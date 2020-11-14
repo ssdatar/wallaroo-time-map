@@ -15,12 +15,16 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZGF0YXJrYWxsb28iLCJhIjoiY2toOXI3aW5kMDRlZTJ4c
 const slider = select('#slider');
 const activeDay = select('#active-day');
 const activeHr = select('#active-hour');
+const zoom = isMobile.any() ? 2 : 3;
+const radiusFactor = isMobile.any() ? 0.3 : 0.5;
 
 const map = new mapboxgl.Map({
   container: 'wallaroo-map',
   style: 'mapbox://styles/mapbox/dark-v9',
   center: [-95.7129, 37.0902],
-  zoom: isMobile.any() ? 2 : 3,
+  zoom,
+  minZoom: zoom,
+  maxZoom: 5,
 });
 
 const popup = new mapboxgl.Popup();
@@ -80,7 +84,7 @@ const makeMap = () => {
     },
     layout: {
       'text-field': ['get', 'city'],
-      'text-variable-anchor': ['top', 'right'],
+      'text-variable-anchor': ['top', 'right', 'bottom', 'left'],
       'text-radial-offset': 0.7,
       'text-justify': 'auto',
       'text-size': 12,
@@ -98,7 +102,7 @@ const makeMap = () => {
       data: './assets/packages.json',
     },
     paint: {
-      'circle-radius': ['*', ['sqrt', ['number', ['get', 'Value']]], 0.5],
+      'circle-radius': ['*', ['sqrt', ['number', ['get', 'Value']]], radiusFactor],
       'circle-color': [
         'case',
         ['==', ['get', 'flag'], 0], '#8dd3c7',
@@ -112,6 +116,13 @@ const makeMap = () => {
       'circle-opacity': 0.8,
     },
     filter: ['all', filterTime, filterFlag],
+  });
+
+  map.moveLayer('place-city-lg-n');
+
+  const { layers } = map.getStyle();
+  layers.forEach((l) => {
+    console.log(l.id);
   });
 
   activeDay.innerText = 'Now';
@@ -141,6 +152,7 @@ const makeMap = () => {
 
   slider.addEventListener('input', (e) => {
     const m = +e.target.value;
+    console.log(m);
     filterTime = ['==', ['get', 'Time'], m];
     const day = Math.floor(parseInt(m, 10) / 1440);
 
