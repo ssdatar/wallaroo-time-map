@@ -15,8 +15,26 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZGF0YXJrYWxsb28iLCJhIjoiY2toOXI3aW5kMDRlZTJ4c
 const slider = select('#slider');
 const activeDay = select('#active-day');
 const activeHr = select('#active-hour');
-const zoom = isMobile.any() ? 2 : 3;
+const zoom = isMobile.any() ? 2 : 3.1;
 const radiusFactor = isMobile.any() ? 0.2 : 0.3;
+
+const roundTime = (time, minutesToRound) => {
+  let [hours, minutes] = time.split(':');
+  hours = parseInt(hours, 10);
+  minutes = parseInt(minutes, 10);
+
+  // Convert hours and minutes to time in minutes
+  const t = (hours * 60) + minutes;
+  const rounded = Math.round(t / minutesToRound) * minutesToRound;
+  const rHr = Math.floor(rounded / 60);
+  const rMin = (rounded % 60);
+
+  return rHr * 60 + rMin;
+};
+
+const maxTime = 8250; // Max value in data
+const Now = `${new Date().getHours()}:${new Date().getMinutes()}`;
+const nowTime = roundTime(Now, 30) + (Math.floor(maxTime / 1440) * 24 * 60);
 
 const map = new mapboxgl.Map({
   container: 'wallaroo-map',
@@ -27,6 +45,7 @@ const map = new mapboxgl.Map({
   maxZoom: 5,
 });
 
+map.addControl(new mapboxgl.NavigationControl());
 const popup = new mapboxgl.Popup();
 
 const convertToTime = (n) => {
@@ -50,7 +69,7 @@ const makeMap = () => {
     },
     paint: {
       'line-color': '#888',
-      'line-width': 2,
+      'line-width': 1.3,
     },
   });
 
@@ -61,15 +80,9 @@ const makeMap = () => {
       type: 'geojson',
       data: './assets/cities.geojson',
     },
-    // layout: {
-    //   'text-field': ['get', 'city'],
-    //   'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-    //   'text-radial-offset': 0.5,
-    //   'text-justify': 'auto',
-    // },
     paint: {
       'circle-color': '#e2e2e2',
-      'circle-radius': 7,
+      'circle-radius': isMobile.any() ? 4 : 5,
       'circle-stroke-width': 2,
       'circle-opacity': 0.6,
     },
@@ -125,8 +138,9 @@ const makeMap = () => {
   //   console.log(l.id);
   // });
 
+  slider.value = nowTime;
   activeDay.innerText = 'Now';
-  activeHr.innerText = '09:30';
+  activeHr.innerText = convertToTime(nowTime);
 
   map.on('click', 'packages', (e) => {
     const status = {
@@ -159,9 +173,9 @@ const makeMap = () => {
   slider.addEventListener('input', (e) => {
     const m = +e.target.value;
     filterTime = ['==', ['get', 'Time'], m];
-    const day = Math.floor(parseInt(m, 10) / 1440);
+    const day = 5 - Math.floor(parseInt(m, 10) / 1440);
 
-    activeDay.innerText = day > 2 ? 'Now' : `Now - ${Math.abs(day - 3)} days`;
+    activeDay.innerText = !day ? 'Now' : `Now - ${Math.abs(day)} days`;
     activeHr.innerText = convertToTime(+m);
 
     map.setFilter('packages', ['all', filterTime, filterFlag]);

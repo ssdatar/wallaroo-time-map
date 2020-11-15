@@ -64,6 +64,9 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
   +mq(bp-2)
     height 600px
 
+  input[type=range]
+    -webkit-appearance none
+
   .graphic__input
     position absolute
     right 5px
@@ -82,6 +85,47 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
 
     #slider
       width 90%
+      appearance none
+      -webkit-appearance none
+      cursor pointer
+      +mq(bp-2)
+        margin 1em auto
+
+      &::-webkit-slider-runnable-track
+        background $black-hed
+        border none
+        border-radius 3px
+        width 90%
+        // height 5px
+
+      &::-webkit-slider-thumb
+        -webkit-appearance none
+        border none
+        height 15px
+        width @height
+        border-radius 50%
+        background $goldenrod
+
+      &::-moz-range-track
+        background $black-hed
+        border none
+        height 15px
+        border-radius 3px
+
+      &::-moz-range-thumb
+        border none
+        height 15px
+        width @height
+        border-radius 50%
+        background $goldenrod
+
+      &::-moz-focusring
+        outline 1px solid $offwhite
+
+    #slider:focus
+      outline none
+      &::-webkit-slider-runnable-track
+        background lighten($black-hed, 30)
 
     &--dropdown
       font-family 'Lato'
