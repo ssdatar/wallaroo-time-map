@@ -16,7 +16,7 @@ const slider = select('#slider');
 const activeDay = select('#active-day');
 const activeHr = select('#active-hour');
 const zoom = isMobile.any() ? 2 : 3;
-const radiusFactor = isMobile.any() ? 0.3 : 0.5;
+const radiusFactor = isMobile.any() ? 0.2 : 0.3;
 
 const map = new mapboxgl.Map({
   container: 'wallaroo-map',
@@ -76,25 +76,6 @@ const makeMap = () => {
   });
 
   map.addLayer({
-    id: 'city-label',
-    type: 'symbol',
-    source: {
-      type: 'geojson',
-      data: './assets/cities.geojson',
-    },
-    layout: {
-      'text-field': ['get', 'city'],
-      'text-variable-anchor': ['top', 'right', 'bottom', 'left'],
-      'text-radial-offset': 0.7,
-      'text-justify': 'auto',
-      'text-size': 12,
-    },
-    paint: {
-      'text-color': '#ededed',
-    },
-  });
-
-  map.addLayer({
     id: 'packages',
     type: 'circle',
     source: {
@@ -118,23 +99,48 @@ const makeMap = () => {
     filter: ['all', filterTime, filterFlag],
   });
 
+  map.addLayer({
+    id: 'city-label',
+    type: 'symbol',
+    source: {
+      type: 'geojson',
+      data: './assets/cities.geojson',
+    },
+    layout: {
+      'text-field': ['get', 'city'],
+      'text-variable-anchor': ['top', 'right', 'bottom', 'left'],
+      'text-radial-offset': 0.7,
+      'text-justify': 'auto',
+      'text-size': 12,
+    },
+    paint: {
+      'text-color': '#ededed',
+    },
+  });
+
   map.moveLayer('place-city-lg-n');
 
-  const { layers } = map.getStyle();
-  layers.forEach((l) => {
-    console.log(l.id);
-  });
+  // const { layers } = map.getStyle();
+  // layers.forEach((l) => {
+  //   console.log(l.id);
+  // });
 
   activeDay.innerText = 'Now';
   activeHr.innerText = '09:30';
 
   map.on('click', 'packages', (e) => {
+    const status = {
+      0: 'OK',
+      1: 'Delayed',
+      2: 'Potentially damaged',
+      3: 'Delayed and potentially damaged',
+    };
+
     const html = `
     <h4>Package #${e.features[0].properties.Package}</h4>
     <p>Route: ${e.features[0].properties.Route}</p>
-    <p>Value: ${e.features[0].properties.Value}</p>
-    <p>Delayed: ${e.features[0].properties.Delayed}</p>
-    <p>Damaged: ${e.features[0].properties.Damaged}</p>`;
+    <p>Value: $${e.features[0].properties.Value}.00</p>
+    <p>Status: ${status[e.features[0].properties.flag]}</p>`;
 
     popup
       .setLngLat(e.lngLat)
@@ -152,7 +158,6 @@ const makeMap = () => {
 
   slider.addEventListener('input', (e) => {
     const m = +e.target.value;
-    console.log(m);
     filterTime = ['==', ['get', 'Time'], m];
     const day = Math.floor(parseInt(m, 10) / 1440);
 
@@ -164,7 +169,6 @@ const makeMap = () => {
 
   document.getElementById('flag-select').addEventListener('change', (e) => {
     const flag = e.target.value;
-    console.log(flag);
     if (flag === '0') {
       filterFlag = ['!=', ['get', 'flag'], 'whatever'];
     } else {
