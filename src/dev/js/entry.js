@@ -18,23 +18,23 @@ const activeHr = select('#active-hour');
 const zoom = isMobile.any() ? 2 : 3.1;
 const radiusFactor = isMobile.any() ? 0.2 : 0.3;
 
-const roundTime = (time, minutesToRound) => {
-  let [hours, minutes] = time.split(':');
-  hours = parseInt(hours, 10);
-  minutes = parseInt(minutes, 10);
+// const roundTime = (time, minutesToRound) => {
+//   let [hours, minutes] = time.split(':');
+//   hours = parseInt(hours, 10);
+//   minutes = parseInt(minutes, 10);
 
-  // Convert hours and minutes to time in minutes
-  const t = (hours * 60) + minutes;
-  const rounded = Math.round(t / minutesToRound) * minutesToRound;
-  const rHr = Math.floor(rounded / 60);
-  const rMin = (rounded % 60);
+//   // Convert hours and minutes to time in minutes
+//   const t = (hours * 60) + minutes;
+//   const rounded = Math.round(t / minutesToRound) * minutesToRound;
+//   const rHr = Math.floor(rounded / 60);
+//   const rMin = (rounded % 60);
 
-  return rHr * 60 + rMin;
-};
+//   return rHr * 60 + rMin;
+// };
 
-const maxTime = 8250; // Max value in data
-const Now = `${new Date().getHours()}:${new Date().getMinutes()}`;
-const nowTime = roundTime(Now, 30) + (Math.floor(maxTime / 1440) * 24 * 60);
+const maxTime = 6480; // Max value in data
+// const Now = `${new Date().getHours()}:${new Date().getMinutes()}`;
+// const nowTime = roundTime(Now, 30) + (Math.floor(maxTime / 1440) * 24 * 60);
 
 const map = new mapboxgl.Map({
   container: 'wallaroo-map',
@@ -57,7 +57,7 @@ const convertToTime = (n) => {
 };
 
 const makeMap = () => {
-  let filterTime = ['==', ['get', 'Time'], 4890];
+  let filterTime = ['==', ['get', 'Time'], maxTime];
   let filterFlag = ['!=', ['get', 'flag'], 'whatever'];
 
   map.addLayer({
@@ -93,16 +93,16 @@ const makeMap = () => {
     type: 'circle',
     source: {
       type: 'geojson',
-      data: './assets/packages.json',
+      data: './assets/packages-2.json',
     },
     paint: {
       'circle-radius': ['*', ['sqrt', ['number', ['get', 'Value']]], radiusFactor],
       'circle-color': [
         'case',
-        ['==', ['get', 'flag'], 0], '#8dd3c7',
-        ['==', ['get', 'flag'], 1], '#ffffb3',
-        ['==', ['get', 'flag'], 1], '#fdc086',
-        ['==', ['get', 'flag'], 3], '#fb8072',
+        ['==', ['get', 'flag'], '0'], '#8dd3c7',
+        ['==', ['get', 'flag'], '1'], '#ffffb3',
+        ['==', ['get', 'flag'], '2'], '#fdc086',
+        ['==', ['get', 'flag'], '3'], '#fb8072',
         '#d3d3d3',
       ],
       'circle-stroke-color': '#ececec',
@@ -138,11 +138,11 @@ const makeMap = () => {
   //   console.log(l.id);
   // });
 
-  slider.value = nowTime;
   activeDay.innerText = 'Now';
-  activeHr.innerText = convertToTime(nowTime);
+  activeHr.innerText = convertToTime(6480);
 
   map.on('click', 'packages', (e) => {
+    console.log(e.features[0].properties);
     const status = {
       0: 'OK',
       1: 'Delayed',
@@ -152,7 +152,6 @@ const makeMap = () => {
 
     const html = `
     <h4>Package #${e.features[0].properties.Package}</h4>
-    <p>Route: ${e.features[0].properties.Route}</p>
     <p>Value: $${e.features[0].properties.Value}.00</p>
     <p>Status: ${status[e.features[0].properties.flag]}</p>`;
 
@@ -173,7 +172,7 @@ const makeMap = () => {
   slider.addEventListener('input', (e) => {
     const m = +e.target.value;
     filterTime = ['==', ['get', 'Time'], m];
-    const day = 5 - Math.floor(parseInt(m, 10) / 1440);
+    const day = Math.floor((maxTime - m) / 1440);
 
     activeDay.innerText = !day ? 'Now' : `Now - ${Math.abs(day)} days`;
     activeHr.innerText = convertToTime(+m);
@@ -183,10 +182,11 @@ const makeMap = () => {
 
   document.getElementById('flag-select').addEventListener('change', (e) => {
     const flag = e.target.value;
+    console.log(flag);
     if (flag === '0') {
       filterFlag = ['!=', ['get', 'flag'], 'whatever'];
     } else {
-      filterFlag = ['==', ['get', 'flag'], +flag];
+      filterFlag = ['==', ['get', 'flag'], flag];
     }
     map.setFilter('packages', ['all', filterTime, filterFlag]);
   });
