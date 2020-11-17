@@ -93,16 +93,16 @@ const makeMap = () => {
     type: 'circle',
     source: {
       type: 'geojson',
-      data: './assets/packages-2.json',
+      data: './assets/packages-2.geojson',
     },
     paint: {
       'circle-radius': ['*', ['sqrt', ['number', ['get', 'Value']]], radiusFactor],
       'circle-color': [
         'case',
-        ['==', ['get', 'flag'], '0'], '#8dd3c7',
-        ['==', ['get', 'flag'], '1'], '#ffffb3',
-        ['==', ['get', 'flag'], '2'], '#fdc086',
-        ['==', ['get', 'flag'], '3'], '#fb8072',
+        ['==', ['get', 'flag'], 0], '#8dd3c7',
+        ['==', ['get', 'flag'], 1], '#ffffb3',
+        ['==', ['get', 'flag'], 2], '#fdc086',
+        ['==', ['get', 'flag'], 3], '#fb8072',
         '#d3d3d3',
       ],
       'circle-stroke-color': '#ececec',
@@ -186,7 +186,7 @@ const makeMap = () => {
     if (flag === '0') {
       filterFlag = ['!=', ['get', 'flag'], 'whatever'];
     } else {
-      filterFlag = ['==', ['get', 'flag'], flag];
+      filterFlag = ['==', ['get', 'flag'], +flag];
     }
     map.setFilter('packages', ['all', filterTime, filterFlag]);
   });
