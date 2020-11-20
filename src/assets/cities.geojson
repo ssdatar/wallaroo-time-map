@@ -1,145 +1,23 @@
 {
-   "type": "FeatureCollection",
-   "features": [
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -73.57032,45.389913 ]
-    },
-    "properties": {
-    "city":"Montreal"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -121.447727,38.571851 ]
-    },
-    "properties": {
-    "city":"Sacramento"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -90.095216,29.985974 ]
-    },
-    "properties": {
-    "city":"New Orleans"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -80.22522,26.104105 ]
-    },
-    "properties": {
-    "city":"Miami"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -80.845266,35.243698 ]
-    },
-    "properties": {
-    "city":"Charlotte"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.327016,41.606089 ]
-    },
-    "properties": {
-    "city":"Chicago"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -93.201227,45.160906 ]
-    },
-    "properties": {
-    "city":"Minneapolis"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -96.808798,33.180214 ]
-    },
-    "properties": {
-    "city":"Dallas"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -97.739677,30.324876 ]
-    },
-    "properties": {
-    "city":"Austin"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -121.886772,37.287492 ]
-    },
-    "properties": {
-    "city":"San Jose"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -74.147129,40.693337 ]
-    },
-    "properties": {
-    "city":"Newark"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -122.308641,47.584744 ]
-    },
-    "properties": {
-    "city":"Seattle"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -96.812207,47.082954 ]
-    },
-    "properties": {
-    "city":"Fargo"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -79.875539,43.278095 ]
-    },
-    "properties": {
-    "city":"Toronto"
-    }
-  }
+"type": "FeatureCollection",
+"name": "cities",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "city": "Montreal", "lat": 45.389913, "long": -73.57032 }, "geometry": { "type": "Point", "coordinates": [ -73.57032, 45.38991 ] } },
+{ "type": "Feature", "properties": { "city": "Sacramento", "lat": 38.571851, "long": -121.447727 }, "geometry": { "type": "Point", "coordinates": [ -121.44773, 38.57185 ] } },
+{ "type": "Feature", "properties": { "city": "New Orleans", "lat": 29.985974, "long": -90.095216 }, "geometry": { "type": "Point", "coordinates": [ -90.09522, 29.98597 ] } },
+{ "type": "Feature", "properties": { "city": "Miami", "lat": 26.104105, "long": -80.22522 }, "geometry": { "type": "Point", "coordinates": [ -80.22522, 26.10411 ] } },
+{ "type": "Feature", "properties": { "city": "Charlotte", "lat": 35.243698, "long": -80.845266 }, "geometry": { "type": "Point", "coordinates": [ -80.84527, 35.2437 ] } },
+{ "type": "Feature", "properties": { "city": "Chicago", "lat": 41.606089, "long": -87.327016 }, "geometry": { "type": "Point", "coordinates": [ -87.32702, 41.60609 ] } },
+{ "type": "Feature", "properties": { "city": "Minneapolis", "lat": 45.160906, "long": -93.201227 }, "geometry": { "type": "Point", "coordinates": [ -93.20123, 45.16091 ] } },
+{ "type": "Feature", "properties": { "city": "Dallas", "lat": 33.180214, "long": -96.808798 }, "geometry": { "type": "Point", "coordinates": [ -96.8088, 33.18021 ] } },
+{ "type": "Feature", "properties": { "city": "Austin", "lat": 30.324876, "long": -97.739677 }, "geometry": { "type": "Point", "coordinates": [ -97.73968, 30.32488 ] } },
+{ "type": "Feature", "properties": { "city": "San Jose", "lat": 37.287492, "long": -121.886772 }, "geometry": { "type": "Point", "coordinates": [ -121.88677, 37.28749 ] } },
+{ "type": "Feature", "properties": { "city": "Newark", "lat": 40.693337, "long": -74.147129 }, "geometry": { "type": "Point", "coordinates": [ -74.14713, 40.69334 ] } },
+{ "type": "Feature", "properties": { "city": "Seattle", "lat": 47.584744, "long": -122.308641 }, "geometry": { "type": "Point", "coordinates": [ -122.30864, 47.58474 ] } },
+{ "type": "Feature", "properties": { "city": "Fargo", "lat": 47.082954, "long": -96.812207 }, "geometry": { "type": "Point", "coordinates": [ -96.81221, 47.08295 ] } },
+{ "type": "Feature", "properties": { "city": "Toronto", "lat": 43.278095, "long": -79.875539 }, "geometry": { "type": "Point", "coordinates": [ -79.87554, 43.2781 ] } },
+{ "type": "Feature", "properties": { "city": "Salt Lake City", "lat": 40.622627, "long": -111.904179 }, "geometry": { "type": "Point", "coordinates": [ -111.90418, 40.62263 ] } },
+{ "type": "Feature", "properties": { "city": "Santa Fe", "lat": 35.69279, "long": -105.941153 }, "geometry": { "type": "Point", "coordinates": [ -105.94115, 35.69279 ] } }
 ]
 }

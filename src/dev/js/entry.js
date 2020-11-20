@@ -18,23 +18,23 @@ const activeHr = select('#active-hour');
 const zoom = isMobile.any() ? 2 : 3.1;
 const radiusFactor = isMobile.any() ? 0.2 : 0.3;
 
-// const roundTime = (time, minutesToRound) => {
-//   let [hours, minutes] = time.split(':');
-//   hours = parseInt(hours, 10);
-//   minutes = parseInt(minutes, 10);
+const roundTime = (time, minutesToRound) => {
+  let [hours, minutes] = time.split(':');
+  hours = parseInt(hours, 10);
+  minutes = parseInt(minutes, 10);
 
-//   // Convert hours and minutes to time in minutes
-//   const t = (hours * 60) + minutes;
-//   const rounded = Math.round(t / minutesToRound) * minutesToRound;
-//   const rHr = Math.floor(rounded / 60);
-//   const rMin = (rounded % 60);
+  // Convert hours and minutes to time in minutes
+  const t = (hours * 60) + minutes;
+  const rounded = Math.round(t / minutesToRound) * minutesToRound;
+  const rHr = Math.floor(rounded / 60);
+  const rMin = (rounded % 60);
 
-//   return rHr * 60 + rMin;
-// };
+  return rHr * 60 + rMin;
+};
 
 const maxTime = 6480; // Max value in data
-// const Now = `${new Date().getHours()}:${new Date().getMinutes()}`;
-// const nowTime = roundTime(Now, 30) + (Math.floor(maxTime / 1440) * 24 * 60);
+const Now = `${new Date().getHours()}:${new Date().getMinutes()}`;
+const nowTime = roundTime(Now, 30);
 
 const map = new mapboxgl.Map({
   container: 'wallaroo-map',
@@ -132,14 +132,8 @@ const makeMap = () => {
   });
 
   map.moveLayer('place-city-lg-n');
-
-  // const { layers } = map.getStyle();
-  // layers.forEach((l) => {
-  //   console.log(l.id);
-  // });
-
   activeDay.innerText = 'Now';
-  activeHr.innerText = convertToTime(6480);
+  activeHr.innerText = convertToTime(nowTime);
 
   map.on('click', 'packages', (e) => {
     console.log(e.features[0].properties);
@@ -169,20 +163,22 @@ const makeMap = () => {
     map.getCanvas().style.cursor = '';
   });
 
+  let updateTime = nowTime;
+
   slider.addEventListener('input', (e) => {
+    updateTime -= 30;
     const m = +e.target.value;
     filterTime = ['==', ['get', 'Time'], m];
     const day = Math.floor((maxTime - m) / 1440);
 
     activeDay.innerText = !day ? 'Now' : `Now - ${Math.abs(day)} days`;
-    activeHr.innerText = convertToTime(+m);
+    activeHr.innerText = convertToTime(Math.abs(updateTime));
 
     map.setFilter('packages', ['all', filterTime, filterFlag]);
   });
 
   document.getElementById('flag-select').addEventListener('change', (e) => {
     const flag = e.target.value;
-    console.log(flag);
     if (flag === '0') {
       filterFlag = ['!=', ['get', 'flag'], 'whatever'];
     } else {
