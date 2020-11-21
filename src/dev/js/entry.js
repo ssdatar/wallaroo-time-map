@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl';
+// import { debounce } from 'lodash';
 import { select } from './utils/dom';
 import isMobile from './utils/isMobile';
 
@@ -32,9 +33,17 @@ const roundTime = (time, minutesToRound) => {
   return rHr * 60 + rMin;
 };
 
+function range(start, end, step) {
+  const len = Math.floor((end - start) / step) + 1;
+  return Array(len).fill().map((_, idx) => start + (idx * step));
+}
+
 const maxTime = 6480; // Max value in data
 const Now = `${new Date().getHours()}:${new Date().getMinutes()}`;
-const nowTime = roundTime(Now, 30);
+const nowTime = roundTime(Now, 30) + (Math.floor(maxTime / 1440) * 24 * 60);
+const nowMin = nowTime - 2880;
+const timeArray = range(nowMin, nowTime, 30);
+const sliderArray = range(3600, 6480, 30);
 
 const map = new mapboxgl.Map({
   container: 'wallaroo-map',
@@ -132,11 +141,10 @@ const makeMap = () => {
   });
 
   map.moveLayer('place-city-lg-n');
-  activeDay.innerText = 'Now';
+  activeDay.innerText = 'Today';
   activeHr.innerText = convertToTime(nowTime);
 
   map.on('click', 'packages', (e) => {
-    console.log(e.features[0].properties);
     const status = {
       0: 'OK',
       1: 'Delayed',
@@ -163,16 +171,15 @@ const makeMap = () => {
     map.getCanvas().style.cursor = '';
   });
 
-  let updateTime = nowTime;
+  let m = 6480;
 
   slider.addEventListener('input', (e) => {
-    updateTime -= 30;
-    const m = +e.target.value;
+    m = +e.target.value;
+    const i = sliderArray.indexOf(m);
     filterTime = ['==', ['get', 'Time'], m];
     const day = Math.floor((maxTime - m) / 1440);
-
-    activeDay.innerText = !day ? 'Now' : `Now - ${Math.abs(day)} days`;
-    activeHr.innerText = convertToTime(Math.abs(updateTime));
+    activeDay.innerText = !day ? 'Today' : `Today - ${Math.abs(day)} days`;
+    activeHr.innerText = convertToTime(Math.abs(timeArray[i]));
 
     map.setFilter('packages', ['all', filterTime, filterFlag]);
   });

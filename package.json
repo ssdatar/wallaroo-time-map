@@ -48,6 +48,7 @@
     "webpack": "^3.11.0"
   },
   "dependencies": {
+    "lodash": "^4.17.20",
     "mapbox-gl": "^1.12.0"
   }
 }
