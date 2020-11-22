@@ -112,6 +112,7 @@ const makeMap = () => {
         ['==', ['get', 'flag'], 1], '#ffffb3',
         ['==', ['get', 'flag'], 2], '#fdc086',
         ['==', ['get', 'flag'], 3], '#fb8072',
+        ['==', ['get', 'flag'], 4], '#b3de69',
         '#d3d3d3',
       ],
       'circle-stroke-color': '#ececec',
