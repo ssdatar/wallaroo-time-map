@@ -108,7 +108,7 @@ const makeMap = () => {
       'circle-radius': ['*', ['sqrt', ['number', ['get', 'Value']]], radiusFactor],
       'circle-color': [
         'case',
-        ['==', ['get', 'flag'], 0], '#80b1d3',
+        ['==', ['get', 'flag'], 0], '#77BBCC',
         ['==', ['get', 'flag'], 1], '#ffffb3',
         ['==', ['get', 'flag'], 2], '#fdc086',
         ['==', ['get', 'flag'], 3], '#fb8072',
