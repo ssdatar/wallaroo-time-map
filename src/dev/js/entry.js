@@ -108,16 +108,16 @@ const makeMap = () => {
       'circle-radius': ['*', ['sqrt', ['number', ['get', 'Value']]], radiusFactor],
       'circle-color': [
         'case',
-        ['==', ['get', 'flag'], 0], '#8dd3c7',
+        ['==', ['get', 'flag'], 0], '#80b1d3',
         ['==', ['get', 'flag'], 1], '#ffffb3',
         ['==', ['get', 'flag'], 2], '#fdc086',
         ['==', ['get', 'flag'], 3], '#fb8072',
-        ['==', ['get', 'flag'], 4], '#b3de69',
+        ['==', ['get', 'flag'], 4], '#78c679',
         '#d3d3d3',
       ],
       'circle-stroke-color': '#ececec',
       'circle-stroke-width': 1.5,
-      'circle-opacity': 0.8,
+      'circle-opacity': 1,
     },
     filter: ['all', filterTime, filterFlag],
   });
@@ -151,6 +151,7 @@ const makeMap = () => {
       1: 'Delayed',
       2: 'Potentially damaged',
       3: 'Delayed and potentially damaged',
+      4: 'Replacement',
     };
 
     const html = `

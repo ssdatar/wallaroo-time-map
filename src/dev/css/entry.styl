@@ -72,7 +72,7 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
     right 5px
     bottom 5px
     height auto
-    z-index 2
+    z-index 1
     background $offwhite
     opacity 0.7
     padding 1em
@@ -184,15 +184,23 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
 .graphic
   &__legend
     position absolute
-    right 0px
+    left 0px
     top 0px
-    z-index 2
+    z-index 1
     color $offwhite
     padding .5em
+    display flex
+    // justify-content space-evenly
+    flex-wrap wrap
     +mq(bp-2)
+      left auto
       right 0px
-      top 20px
+      // top 5px
       padding 1em
+      display block
+
+    div
+      margin-right .5em
 
     .legend-text
       font-size 0.9em
@@ -201,18 +209,18 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
         font-size 1.2em
 
     .legend-box
-      height 1.2em
+      height 1em
       width @height
       border-radius 50%
       display inline-block
       margin-right .25em
-      border 1px solid #ececec
-
-      &-0
-        background #b3de69
+      border 1.5px solid #ececec
+      +mq(bp-2)
+        height 1.2em
+        width @height
 
       &-1
-        background #8dd3c7
+        background #80b1d3
 
       &-2
         background #ffffb3
@@ -222,6 +230,9 @@ set-font('bentonsanscond-regular') /* Graphic byline and source */
 
       &-4
         background #fb8072
+
+      &-5
+        background #78c679
 
   &__text
     margin .5rem 0
