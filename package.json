@@ -10,10 +10,12 @@
     "clean": "rimraf build && mkdir build",
     "prebuild": "npm run clean -s",
     "build:html": "cp src/index.html ./build/",
+    "build:webpack": "webpack --config webpack.config.js",
     "build:js": "uglifyjs src/main.js -c -m -o ./build/main.js",
+    "build:stylus": "stylus src/dev/css/*.styl -o src/main.css",
     "build:css": "autoprefixer < src/main.css | uglifycss src/main.css > ./build/main.css",
     "build:assets": "shx cp -R src/assets/ ./build/assets/",
-    "build": "npm run build:html && npm run build:js && npm run build:css && npm run build:assets",
+    "build": "npm run build:webpack && npm run build:stylus && npm run build:html && npm run build:js && npm run build:css && npm run build:assets",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "open": "open http://localhost:8888"
